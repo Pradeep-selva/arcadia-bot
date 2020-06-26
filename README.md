@@ -1,5 +1,4 @@
 # ARCADIA DISCORD BOT
----
 * This is a server specific discord bot written in python using the discord.py library, which wraps the discord API. 
 
 * It takes care of server needs from verifying new users to temporarily banning them and also has some fun commands for server interactions. 
@@ -8,7 +7,6 @@
 * The prefix is '+'.
 
 ## List of cogs
----
 ### Moderation
 * This contains commands and event listeners for server moderation.
 * These include verifying a user, temporarily banning a user and more!
@@ -26,11 +24,9 @@
 
 
 ## Dependencies
----
 Dependencies can be found in `requirements.txt`
 
 ## Other
----
 #### Database
 Firebase
 #### APIs used
@@ -41,5 +37,4 @@ Firebase
 * AniDB API
 * Tatsumaki API
 ## License
----
 [MIT](https://choosealicense.com/licenses/mit/)
