@@ -1,0 +1,9 @@
+discord.py
+python-dotenv
+requests
+asyncpg
+asyncio
+pillow
+googletrans
+firebase_admin
+tatsumaki.py
