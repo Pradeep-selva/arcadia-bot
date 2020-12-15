@@ -6,6 +6,10 @@ from googletrans import Translator
 import discord
 from dotenv import load_dotenv
 from discord.ext import commands
+import matplotlib.pyplot as plt
+from firebase_admin import firestore
+
+db = firestore.client()
 
 load_dotenv()
 
@@ -29,7 +33,7 @@ class Utilities(commands.Cog):
         help += "**__Moderation__**\n"
         help += "`devreset`, `softban`, `emoteDataClear`\n `spamlist`, `spamremove`, `displayspam`\n"
         help += "\n**__Utilities__**\n"
-        help += "`aniInfo`, `cf`, `invite`, `ping` \n  `img`, `customhelp`, `custom`, `customdelete`\n`customupdate`, `customlist`, `translate` \n"
+        help += "`aniInfo`, `cf`, `invite`, `ping` \n  `img`, `customhelp`, `custom`, `customdelete`\n`customupdate`, `customlist`, `translate`, `imgStats` \n"
         help += "\n**__Stats__**\n"
         help += "`msgcount`,`emoteUsage`, `topmsg`\n"
         help += "\n**__Fun__**\n"
@@ -119,6 +123,40 @@ class Utilities(commands.Cog):
             embed.set_image(url=img)
 
             await ctx.send(embed=embed)
+        
+        doc_ref = db.collection(u'img-stats').document(str(ctx.message.author.name))
+
+        if not(doc_ref.get().exists):
+            doc_ref.set({u'uses':1})
+        else:
+            doc_ref.update({u'uses': firestore.Increment(1)})
+
+@commands.command(name="imgStats", help="get stats on +img")
+async def imgStats(ctx, *msg):
+    label = list()
+    sizes = list()
+
+    doc_ref = db.collection(u'img-stats').order_by(u'uses', direction=firestore.Query.DESCENDING)
+    docs = list(doc_ref.stream())[:20]
+
+    for doc in docs:
+        label.append(doc.id)
+        sizes.append(doc.to_dict()["uses"])
+    
+    explode = [0]*len(label)
+    explode[sizes.index(max(sizes))] = 0.1
+
+    print("+imgStats", label,sizes,explode)
+
+    fig1, ax1 = plt.subplots()
+    ax1.pie(sizes, explode=explode, labels=label, autopct='%1.1f%%',
+            shadow=True, startangle=90)
+    ax1.axis('equal') 
+
+    plt.savefig("chart.png")
+
+    await ctx.channel.send(file=discord.File('chart.png'), content="**Top 20 +img users**")
+
 
     @commands.command(name="cf", help="View your codeforces profile summary")
     async def cf(self, ctx, *msg):

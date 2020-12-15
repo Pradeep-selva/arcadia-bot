@@ -7,3 +7,4 @@ pillow
 googletrans
 firebase_admin
 tatsumaki.py
+matplotlib
