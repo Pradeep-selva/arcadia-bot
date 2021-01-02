@@ -25,6 +25,13 @@ class Fun(commands.Cog):
 
             await message.add_reaction('🧱')
 
+    @commands.command(name='typerace', help='take a typing race with your friends')
+    @commands.cooldown(1, 45, commands.BucketType.user)
+    async def typerace(ctx):
+        roomCode = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) 
+                            for _ in range(7))
+        await ctx.send(f"**Good Luck!**\nhttps://arcadia-typerace.web.app/rooms/{roomCode}")
+
     @commands.command(
         name='say',
         help=

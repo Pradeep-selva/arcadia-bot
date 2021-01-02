@@ -37,7 +37,7 @@ class Utilities(commands.Cog):
         help += "\n**__Stats__**\n"
         help += "`msgcount`,`emoteUsage`, `topmsg`\n"
         help += "\n**__Fun__**\n"
-        help += "`gamerpoints`, `munnirage`, `owo`\n `mock`, `say`, `senpai`\n"
+        help += "`typerace`, `gamerpoints`, `munnirage`, `owo`\n `mock`, `say`, `senpai`\n"
         help += "\n**__Games__**\n"
         help += "`rps`, `rpsscore`, `toprps`"
 
